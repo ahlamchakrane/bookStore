@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acceuil
+{% endblock %}
+
+{% block body %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Acceuil</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="auteur">Auteurs</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link" href="livre">Livres</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="genre">Genres</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Utilisateurs</a>
+				</li>
+			</ul>
+			<input class="form-control mr-sm-3" type="search" placeholder="Search" aria-label="Search">
+			<button class="btn btn-outline-success mr-2 mr-sm-0" type="submit">Search</button>
+
+		</div>
+	</nav>
+{% endblock %}
