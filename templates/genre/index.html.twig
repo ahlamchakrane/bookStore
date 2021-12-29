@@ -11,7 +11,7 @@
 	{% endfor %}
 	<h1>Genre index</h1>
 
-	<table class="table">
+	<table class="table table-striped ">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -25,8 +25,10 @@
 					<td>{{ genre.id }}</td>
 					<td>{{ genre.nom }}</td>
 					<td>
-						<a href="{{ path('genre_show', {'id': genre.id}) }}" class="btn btn-success">show</a>
-						<a href="{{ path('genre_edit', {'id': genre.id}) }}" class="btn btn-warning">edit</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('genre_show', {'id': genre.id}) }}" class="btn btn-success">show</a>
+							<a href="{{ path('genre_edit', {'id': genre.id}) }}" class="btn btn-warning">edit</a>
+						{% endif %}
 					</td>
 				</tr>
 			{% else %}
@@ -36,6 +38,7 @@
 			{% endfor %}
 		</tbody>
 	</table>
-
-	<a href="{{ path('genre_new') }}" class="btn btn-primary">Create new</a>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a href="{{ path('genre_new') }}" class="btn btn-primary">Create new</a>
+	{% endif %}
 {% endblock %}

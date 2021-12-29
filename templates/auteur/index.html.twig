@@ -11,7 +11,7 @@
 	{% endfor %}
 	<h1>Auteurs</h1>
 
-	<table class="table">
+	<table class="table table-striped ">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -32,7 +32,11 @@
 					<td>{{ auteur.nationalite }}</td>
 					<td>
 						<a href="{{ path('auteur_show', {'id': auteur.id}) }}" class="btn btn-success">show</a>
-						<a href="{{ path('auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning">edit</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning">
+								<span class="oi oi-brush"></span>
+							</a>
+						{% endif %}
 					</td>
 				</tr>
 			{% else %}
@@ -49,5 +53,7 @@
 			</li>
 		</ul>
 	</nav>
-	<a href="{{ path('auteur_new') }}" class="btn btn-primary">Create new</a>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a href="{{ path('auteur_new') }}" class="btn btn-primary">Create new</a>
+	{% endif %}
 {% endblock %}

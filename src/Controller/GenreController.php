@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/genre')]
 class GenreController extends AbstractController
@@ -21,7 +22,7 @@ class GenreController extends AbstractController
             'genres' => $genreRepository->findAll(),
         ]);
     }
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'genre_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -50,6 +51,7 @@ class GenreController extends AbstractController
             'genre' => $genre,
         ]);
     }
+    #[IsGranted('ROLE_ADMIN')]
 
     #[Route('/{id}/edit', name: 'genre_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Genre $genre, EntityManagerInterface $entityManager): Response
@@ -68,6 +70,7 @@ class GenreController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[IsGranted('ROLE_ADMIN')]
 
     #[Route('/{id}', name: 'genre_delete', methods: ['POST'])]
     public function delete(Request $request, Genre $genre, EntityManagerInterface $entityManager): Response

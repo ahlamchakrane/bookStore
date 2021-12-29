@@ -2,13 +2,16 @@
 
 {% block title %}Edit Auteur
 {% endblock %}
-
 {% block body %}
-	<h1>Edit Auteur</h1>
+	<table>
+		{% if is_granted('ROLE_ADMIN') %}
 
-	{{ include('auteur/_form.html.twig', {'button_label': 'Update'}) }}
-
-	<a href="{{ path('auteur_index') }}" class="btn btn-secondary">back to list</a>
-
-	<a class="btn btn-danger">{{ include('auteur/_delete_form.html.twig') }}</a>
+			<h1>Edit Auteur</h1>
+			{{ include('auteur/_form.html.twig', {'button_label': 'Update'}) }}
+			<a href="{{ path('auteur_index') }}" class="btn btn-secondary">back to list</a>
+			<a class="btn btn-danger">{{ include('auteur/_delete_form.html.twig') }}</a>
+		</table>
+	{% else %}
+		<h1>404 page</h1>
+	{% endif %}
 {% endblock %}

@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 #[Route('/livre')]
 class LivreController extends AbstractController
@@ -21,6 +23,7 @@ class LivreController extends AbstractController
             'livres' => $livreRepository->findAll(),
         ]);
     }
+    #[IsGranted('ROLE_ADMIN')]
 
     #[Route('/new', name: 'livre_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -54,6 +57,7 @@ class LivreController extends AbstractController
             'livre' => $livre,
         ]);
     }
+    #[IsGranted('ROLE_ADMIN')]
 
     #[Route('/{id}/edit', name: 'livre_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Livre $livre, EntityManagerInterface $entityManager): Response
@@ -72,6 +76,7 @@ class LivreController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[IsGranted('ROLE_ADMIN')]
 
     #[Route('/{id}', name: 'livre_delete', methods: ['POST'])]
     public function delete(Request $request, Livre $livre, EntityManagerInterface $entityManager): Response

@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/auteur')]
 class AuteurController extends AbstractController
@@ -30,8 +31,9 @@ class AuteurController extends AbstractController
             'auteurs' => $auteurs,
         ]);
     }
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'auteur_new', methods: ['GET', 'POST'])]
+
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $auteur = new Auteur();
@@ -58,7 +60,7 @@ class AuteurController extends AbstractController
             'auteur' => $auteur,
         ]);
     }
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}/edit', name: 'auteur_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Auteur $auteur, EntityManagerInterface $entityManager): Response
     {
@@ -76,7 +78,7 @@ class AuteurController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'auteur_delete', methods: ['POST'])]
     public function delete(Request $request, Auteur $auteur, EntityManagerInterface $entityManager): Response
     {
