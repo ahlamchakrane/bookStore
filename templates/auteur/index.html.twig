@@ -9,7 +9,17 @@
 			{{ message }}
 		</div>
 	{% endfor %}
-	<h1>Auteurs</h1>
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
+	<h1>Auteurs
+		<a href="{{ path('auteur_new') }}" class="btn btn-primary">
+			<i class="bi bi-plus"></i>
+		</a>
+	</h1>
 
 	<table class="table table-striped ">
 		<thead>
@@ -19,6 +29,7 @@
 				<th>Sexe</th>
 				<th>Date_de_naissance</th>
 				<th>Nationalite</th>
+				<th>Livres</th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -31,29 +42,35 @@
 					<td>{{ auteur.dateDeNaissance ? auteur.dateDeNaissance|date('Y-m-d') : '' }}</td>
 					<td>{{ auteur.nationalite }}</td>
 					<td>
-						<a href="{{ path('auteur_show', {'id': auteur.id}) }}" class="btn btn-success">show</a>
-						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning">
-								<span class="oi oi-brush"></span>
-							</a>
-						{% endif %}
+						<ul>
+							{% for livre in auteur.livres %}
+								<li>{{ livre.getTitre() }}</li>
+							{% else %}
+								no records found
+							{% endfor %}
+							<ul></td>
+							<td>
+								<a href="{{ path('auteur_show', {'id': auteur.id}) }}" class="btn btn-success">
+									<i class="bi bi-eye"></i>
+								</a>
+								{% if is_granted('ROLE_ADMIN') %}
+									<a href="{{ path('auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning">
+										<i class="bi bi-pen-fill"></i>
+									</a>
+									<a class="btn btn-danger">
+										<i class="bi bi-trash">
+											{{ include('auteur/_delete_form.html.twig') }}
+										</i>
+									</a>
+								{% endif %}
+							</td>
+						</td>
 					</td>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="6">no records found</td>
-				</tr>
-			{% endfor %}
+			</tbody>
 		</tbody>
-	</table>
-	<nav aria-label="Page navigation example">
-		<ul class="pagination">
-			<li class="page-item">
-				{{knp_pagination_render(auteurs) }}
-			</li>
-		</ul>
-	</nav>
-	{% if is_granted('ROLE_ADMIN') %}
-		<a href="{{ path('auteur_new') }}" class="btn btn-primary">Create new</a>
-	{% endif %}
-{% endblock %}
+	</td>
+</tr>{% else %}
+<tr>
+	<td colspan="6">no records found</td>
+</tr>{% endfor %}</tbody></table>{% if is_granted('ROLE_ADMIN') %}{% endif %}{% endblock %}

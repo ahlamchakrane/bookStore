@@ -4,42 +4,46 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Livre</h1>
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
+	<h2>
+		{{ livre.titre }}</h2>
 
-	<table class="table">
+	<table class="table table-stripped">
+		<thead>
+			<tr>
+				<th style="width: 300px">#</th>
+				<th>Isbn</th>
+				<th>Titre</th>
+				<th>Nombre_page</th>
+				<th>Date_de_parution</th>
+				<th>Note</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<th>Id</th>
 				<td>{{ livre.id }}</td>
-			</tr>
-			<tr>
-				<th>Isbn</th>
 				<td>{{ livre.isbn }}</td>
-			</tr>
-			<tr>
-				<th>Titre</th>
 				<td>{{ livre.titre }}</td>
-			</tr>
-			<tr>
-				<th>Nombre_page</th>
 				<td>{{ livre.nombrePage }}</td>
-			</tr>
-			<tr>
-				<th>Date_de_parution</th>
 				<td>{{ livre.dateDeParution ? livre.dateDeParution|date('Y-m-d') : '' }}</td>
-			</tr>
-			<tr>
-				<th>Note</th>
 				<td>{{ livre.note }}</td>
+				<td>
+					<a href="{{ path('livre_edit', {'id': livre.id}) }}" class="btn btn-warning">edit</a>
+					<a class="btn btn-danger">
+						<i class="bi bi-trash">
+							{{ include('livre/_delete_form.html.twig') }}
+						</i>
+					</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
-
 	<a href="{{ path('livre_index') }}" class="btn btn-secondary">back to list</a>
 
-	<a href="{{ path('livre_edit', {'id': livre.id}) }}" class="btn btn-warning">edit</a>
-
-	<a class="btn btn-danger">
-		{{ include('livre/_delete_form.html.twig') }}
-	</a>
 {% endblock %}

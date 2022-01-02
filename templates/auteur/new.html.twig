@@ -1,16 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Auteur
-{% endblock %}
-
 {% block body %}
-	{% if is_granted('ROLE_ADMIN') %}
-
-		<h1>Create new Auteur</h1>
-
-		{{ include('auteur/_form.html.twig') }}
-
-		<a href="{{ path('auteur_index') }}" class="btn btn-secondary">back to list</a>
+	<table>
+		{% if is_granted('ROLE_ADMIN') %}
+			<br>
+			<h2>Nouveau Auteur</h2>
+			<center>
+				<a class="btn" style="width:50%; heigth:50%">
+					<i class="bi bi-plus">
+						{{ include('auteur/_form.html.twig', {'button_label': 'Enregister'}) }}
+					</i>
+				</a>
+			</center>
+			<a href="{{ path('auteur_index') }}" class="btn btn-secondary" style="margin-left:30px">back to list</a>
+		</table>
 	{% else %}
 		<h1>404 page</h1>
 	{% endif %}

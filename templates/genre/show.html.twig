@@ -4,24 +4,43 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Genre</h1>
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
+	<h2>{{ genre.nom }}</h2>
 
-	<table class="table">
+	<table class="table table-stripped">
+		<thead>
+			<tr>
+				<th style="width: 300px">#</th>
+				<th>Nom</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<th>Id</th>
-				<td>{{ genre.id }}</td>
-			</tr>
-			<tr>
-				<th>Nom</th>
+				<td>{{ genre.id }}.</td>
 				<td>{{ genre.nom }}</td>
+				<td>
+					{% if is_granted('ROLE_ADMIN') %}
+
+						<a href="{{ path('genre_edit', {'id': genre.id}) }}" class="btn btn-warning">
+							<i class="bi bi-pen-fill"></i>
+						</a>
+						<a class="btn btn-danger">
+							<i class="bi bi-trash">
+								{{ include('genre/_delete_form.html.twig') }}
+							</i>
+						</a>
+					{% endif %}
+				</td>
 			</tr>
+
 		</tbody>
 	</table>
-
 	<a href="{{ path('genre_index') }}" class="btn btn-secondary">back to list</a>
 
-	<a href="{{ path('genre_edit', {'id': genre.id}) }}" class="btn btn-warning">edit</a>
-
-	<a class="btn btn-danger">{{ include('genre/_delete_form.html.twig') }}</a>
 {% endblock %}

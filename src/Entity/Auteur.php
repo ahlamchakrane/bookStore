@@ -28,6 +28,7 @@ class Auteur
     #[ORM\Column(type: 'string', length: 255)]
     private $nationalite;
 
+
     #[ORM\ManyToMany(mappedBy: 'auteur', targetEntity: Livre::class)]
     private $livres;
 
@@ -101,7 +102,7 @@ class Auteur
     {
         if (!$this->livres->contains($livre)) {
             $this->livres[] = $livre;
-            $livre->setAuteur($this);
+            $livre->addAuteur($this);
         }
 
         return $this;
@@ -112,7 +113,7 @@ class Auteur
         if ($this->livres->removeElement($livre)) {
             // set the owning side to null (unless already changed)
             if ($livre->getAuteur() === $this) {
-                $livre->setAuteur(null);
+                $livre->addAuteur($this);
             }
         }
 

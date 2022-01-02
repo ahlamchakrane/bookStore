@@ -36,6 +36,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+
             ->add('confirmPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -51,8 +52,9 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+
                 ],
-            ]);
+            ], array('label' => false));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -26,9 +26,9 @@ security:
             custom_authenticator: App\Security\AppAuthenticator
             
             logout:
-                path: app_logout
+                path: deconnexion
                 # where to redirect after logout
-                target: /connexion
+                target: /
                 invalidate_session: true
             
             # activate different ways to authenticate

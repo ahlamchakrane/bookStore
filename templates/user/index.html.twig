@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block title %}User index
+{% endblock %}
+
+{% block body %}
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
+	<h2>Users
+		<a href="{{ path('user_new') }}" class="btn btn-primary">
+			<i class="bi bi-plus"></i>
+		</a>
+	</h2>
+
+	<table class="table table-striped ">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Username</th>
+				<th>Roles</th>
+				<th>Email</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>{{ user.username }}</td>
+					<td>
+						<ul>
+							{% for role in user.roles %}
+								<li>{{ role }}</li>
+							{% endfor %}
+						</ul>
+					</td>
+
+					<td>{{ user.email }}</td>
+					<td>
+						<a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-success">
+							<i class="bi bi-eye"></i>
+						</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning">
+								<i class="bi bi-pen-fill"></i>
+							</a>
+							<a class="btn btn-danger">
+								<i class="bi bi-trash">
+									{{ include('user/_delete_form.html.twig') }}
+								</i>
+							</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

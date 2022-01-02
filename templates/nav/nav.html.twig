@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+	<body>
+
+		<div class="container mt-3">
+			<style>
+				.example-wrapper {
+					margin: 1em auto;
+					max-width: 800px;
+					width: 95%;
+					font: 18px / 1.5 sans-serif;
+				}
+				.example-wrapper code {
+					background: #F5F5F5;
+					padding: 2px 6px;
+				}
+			</style>
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a class="navbar-brand" href="#">Book Store</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('auteur_index') }}">Auteurs</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link" href="{{ path('livre_index') }}">Livres</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('genre_index') }}">Genres</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('user_index') }}">Utilisateurs</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ path('app_register') }}" class="nav-link">S'enregistrer</a>
+						</li>
+						{% if not app.user %}
+							<li class="nav-item">
+								<a class=" nav-link">
+									Connexion
+								</a>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a href="{{ path('deconnexion') }} " class=" nav-link">
+									Deconnexion
+								</a>
+							</li>
+						{% endif %}
+					</ul>
+				</div>
+			</body>
+		</html>
+	</body>
+</html></nav></body></html></div></body></html>

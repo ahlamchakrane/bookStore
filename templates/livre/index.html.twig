@@ -9,8 +9,17 @@
 			{{ message }}
 		</div>
 	{% endfor %}
-	<h1>Livre index</h1>
-
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
+	<h2>Livres
+		<a href="{{ path('livre_new') }}" class="btn btn-primary">
+			<i class="bi bi-plus"></i>
+		</a>
+	</h2>
 	<table class="table table-striped ">
 		<thead>
 			<tr>
@@ -20,6 +29,8 @@
 				<th>Nombre_page</th>
 				<th>Date_de_parution</th>
 				<th>Note</th>
+				<th>Auteurs</th>
+				<th>Genres</th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -33,9 +44,36 @@
 					<td>{{ livre.dateDeParution ? livre.dateDeParution|date('Y-m-d H:i:s') : '' }}</td>
 					<td>{{ livre.note }}</td>
 					<td>
-						<a href="{{ path('livre_show', {'id': livre.id}) }}" class="btn btn-success">show</a>
+						<ul>
+							{% for aut in livre.auteur %}
+								<li>{{ aut.getNomPrenom() }}</li>
+							{% else %}
+								no records found
+							{% endfor %}
+						</ul>
+					</td>
+					<td>
+						<ul>
+							{% for genre in livre.genres %}
+								<li>{{ genre.getNom() }}</li>
+							{% else %}
+								no records found
+							{% endfor %}
+						</ul>
+					</td>
+					<td>
+						<a href="{{ path('livre_show', {'id': livre.id}) }}" class="btn btn-success">
+							<i class="bi bi-eye"></i>
+						</a>
 						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('livre_edit', {'id': livre.id}) }}" class="btn btn-warning">edit</a>
+							<a href="{{ path('livre_edit', {'id': livre.id}) }}" class="btn btn-warning">
+								<i class="bi bi-pen-fill"></i>
+							</a>
+							<a class="btn btn-danger">
+								<i class="bi bi-trash">
+									{{ include('livre/_delete_form.html.twig') }}
+								</i>
+							</a>
 						{% endif %}
 					</td>
 				</tr>
@@ -45,8 +83,5 @@
 				</tr>
 			{% endfor %}
 		</tbody>
-	</table>
-	{% if is_granted('ROLE_ADMIN') %}
-		<a href="{{ path('livre_new') }}" class="btn btn-primary">Create new</a>
-	{% endif %}
-{% endblock %}
+	</td>
+</tr></tbody></tbody></table>{% if is_granted('ROLE_ADMIN') %}{% endif %}{% endblock %}

@@ -6,16 +6,19 @@ use App\Entity\Livre;
 use App\Form\LivreType;
 use App\Repository\LivreRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use Faker\Factory;
 
 #[Route('/livre')]
 class LivreController extends AbstractController
 {
+    private $faker;
     #[Route('/', name: 'livre_index', methods: ['GET'])]
     public function index(LivreRepository $livreRepository): Response
     {
@@ -87,5 +90,22 @@ class LivreController extends AbstractController
         }
 
         return $this->redirectToRoute('livre_index', [], Response::HTTP_SEE_OTHER);
+    }
+    public function __construct(EntityManagerInterface $entityManager, LivreRepository $livreRepository)
+    {
+        $this->faker = Factory::create();
+        $livres = $livreRepository->findAll();
+        if ($livres == null) {
+            for ($i = 0; $i <= 20; $i++) {
+                $livre = new livre();
+                $livre->setIsbn($this->faker->isbn13);
+                $livre->setNombrePage($this->faker->numberBetween(50, 100));
+                $livre->setNote($this->faker->numberBetween(7, 20));
+                $livre->setTitre($this->faker->word());
+                $livre->setDateDeParution(new \DateTime());
+                $entityManager->persist($livre);
+            }
+            $entityManager->flush();
+        }
     }
 }

@@ -46,6 +46,7 @@ class Livre
     public function __construct()
     {
         $this->genres = new ArrayCollection();
+        $this->auteur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,15 +113,26 @@ class Livre
 
         return $this;
     }
-
-    public function getAuteur(): ?Auteur
+    /**
+     * @return Collection|Auteur[]
+     */
+    public function getAuteur(): Collection
     {
         return $this->auteur;
     }
 
-    public function setAuteur(?Auteur $auteur): self
+    public function addAuteur(Auteur $auteur): self
     {
-        $this->auteur = $auteur;
+        if (!$this->auteur->contains($auteur)) {
+            $this->auteur[] = $auteur;
+        }
+
+        return $this;
+    }
+
+    public function removeAuteur(Auteur $auteur): self
+    {
+        $this->auteur->removeElement($auteur);
 
         return $this;
     }
@@ -147,5 +159,9 @@ class Livre
         $this->genres->removeElement($genre);
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->titre;
     }
 }

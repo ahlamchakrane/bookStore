@@ -6,15 +6,19 @@ use App\Entity\Genre;
 use App\Form\GenreType;
 use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Faker\Factory;
 
 #[Route('/genre')]
 class GenreController extends AbstractController
 {
+    private $faker;
+
     #[Route('/', name: 'genre_index', methods: ['GET'])]
     public function index(GenreRepository $genreRepository): Response
     {
@@ -81,5 +85,18 @@ class GenreController extends AbstractController
         }
 
         return $this->redirectToRoute('genre_index', [], Response::HTTP_SEE_OTHER);
+    }
+    public function __construct(EntityManagerInterface $entityManager, GenreRepository $genreRepository)
+    {
+        $this->faker = Factory::create();
+        $genres = $genreRepository->findAll();
+        if ($genres == null) {
+            for ($i = 0; $i <= 20; $i++) {
+                $genre = new genre();
+                $genre->setNom($this->faker->name);
+                $entityManager->persist($genre);
+            }
+            $entityManager->flush();
+        }
     }
 }

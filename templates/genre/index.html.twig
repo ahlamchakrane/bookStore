@@ -9,36 +9,54 @@
 			{{ message }}
 		</div>
 	{% endfor %}
-	<h1>Genre index</h1>
-
-	<table class="table table-striped ">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Nom</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for genre in genres %}
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
+	<h2>Genres
+		<a href="{{ path('genre_new') }}" class="btn btn-primary">
+			<i class="bi bi-plus"></i>
+		</a>
+	</h2>
+	<center>
+		<table class="table table-striped" style="width:80%;">
+			<thead>
 				<tr>
-					<td>{{ genre.id }}</td>
-					<td>{{ genre.nom }}</td>
-					<td>
-						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('genre_show', {'id': genre.id}) }}" class="btn btn-success">show</a>
-							<a href="{{ path('genre_edit', {'id': genre.id}) }}" class="btn btn-warning">edit</a>
-						{% endif %}
-					</td>
+					<th>Id</th>
+					<th>Nom</th>
+					<th>actions</th>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="3">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	{% if is_granted('ROLE_ADMIN') %}
-		<a href="{{ path('genre_new') }}" class="btn btn-primary">Create new</a>
-	{% endif %}
+			</thead>
+			<tbody>
+				{% for genre in genres %}
+					<tr>
+						<td>{{ genre.id }}</td>
+						<td>{{ genre.nom }}</td>
+						<td>
+							<a href="{{ path('genre_show', {'id': genre.id}) }}" class="btn btn-success">
+								<i class="bi bi-eye"></i>
+							</a>
+							{% if is_granted('ROLE_ADMIN') %}
+								<a href="{{ path('genre_edit', {'id': genre.id}) }}" class="btn btn-warning">
+									<i class="bi bi-pen-fill"></i>
+								</a>
+								<a class="btn btn-danger">
+									<i class="bi bi-trash">
+										{{ include('genre/_delete_form.html.twig') }}
+									</i>
+								</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="3">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</center>
+	{% if is_granted('ROLE_ADMIN') %}{% endif %}
 {% endblock %}
