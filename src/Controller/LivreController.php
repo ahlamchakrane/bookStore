@@ -28,10 +28,18 @@ class LivreController extends AbstractController
     private $faker;
     private $livres;
     #[Route('/', name: 'livre_index', methods: ['GET', 'POST'])]
-    public function index(LivreRepository $livreRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(LivreRepository $livreRepository, AuteurRepository $auteurRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         if ($request->isMethod("POST")) {
-            $this->livres = $livreRepository->findBy(array('titre' => $request->get('titre')));
+            if ($request->get('titre'))
+                $this->livres = $livreRepository->findBy(array('titre' => $request->get('titre')));
+            else if ($request->get('auteur')) {
+                $this->livres = $auteurRepository->findBy(array('nom_prenom' => $request->get('auteur')));
+                return $this->renderForm('auteur/index.html.twig', [
+                    'auteurs' => $this->livres,
+                ]);
+            } else
+                $this->livres = $livreRepository->findAll();
         } else {
             $this->livres = $livreRepository->findAll();
         }
