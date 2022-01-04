@@ -35,10 +35,8 @@
 				<td>{{ livre.note }}</td>
 				<td>
 					<a href="{{ path('livre_edit', {'id': livre.id}) }}" class="btn btn-warning">edit</a>
-					<a class="btn btn-danger">
-						<i class="bi bi-trash">
-							{{ include('livre/_delete_form.html.twig') }}
-						</i>
+					<a class="btn">
+						{{ include('livre/_delete_form.html.twig') }}
 					</a>
 				</td>
 			</tr>

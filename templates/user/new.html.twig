@@ -1,12 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
 	<table>
 		{% if is_granted('ROLE_ADMIN') %}
-			<br>
-			<h2>Nouveau Utilisateur</h2>
+			<h2>Nouvel Utilisateur</h2>
 			<center>
-				<a class="btn  m-12" style="width:50%; heigth:50%">
+				<a class="btn m-12" style="width:50%; heigth:50%">
 					<i class="bi bi-plus">
 						{{ include('user/_form.html.twig' , {'button_label': 'Enregister'}) }}
 					</i>
@@ -14,7 +19,6 @@
 			</center>
 			<a href="{{ path('user_index') }}" class="btn btn-secondary" style="margin-left:30px">back to list</a>
 		</table>
-	{% else %}
-		<h1>404 page</h1>
+
 	{% endif %}
 {% endblock %}

@@ -9,6 +9,8 @@
 			{{ message }}
 		</div>
 	{% endfor %}
+
+
 	<style>
 		body {
 			margin: 40px;
@@ -57,20 +59,16 @@
 									<a href="{{ path('auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning">
 										<i class="bi bi-pen-fill"></i>
 									</a>
-									<a class="btn btn-danger">
-										<i class="bi bi-trash">
-											{{ include('auteur/_delete_form.html.twig') }}
-										</i>
-									</a>
-								{% endif %}
-							</td>
+								</a>
+
+								<a class="btn">
+									{{ include('auteur/_delete_form.html.twig') }}
+								</a>
+							{% endif %}
 						</td>
 					</td>
 				</tr>
-			</tbody>
+			</td>
 		</tbody>
-	</td>
-</tr>{% else %}
-<tr>
-	<td colspan="6">no records found</td>
-</tr>{% endfor %}</tbody></table>{% if is_granted('ROLE_ADMIN') %}{% endif %}{% endblock %}
+	</tr>
+</tbody></tbody></td></tr>{% else %}<tr><td colspan="6">no records found</td></tr>{% endfor %}</tbody></table>{% if is_granted('ROLE_ADMIN') %}{% endif %}{% endblock %}

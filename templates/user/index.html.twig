@@ -9,7 +9,7 @@
 		}
 	</style>
 	<br>
-	<h2>Users
+	<h2>Utilisateurs
 		<a href="{{ path('user_new') }}" class="btn btn-primary">
 			<i class="bi bi-plus"></i>
 		</a>
@@ -47,10 +47,8 @@
 							<a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning">
 								<i class="bi bi-pen-fill"></i>
 							</a>
-							<a class="btn btn-danger">
-								<i class="bi bi-trash">
-									{{ include('user/_delete_form.html.twig') }}
-								</i>
+							<a class="btn">
+								{{ include('user/_delete_form.html.twig') }}
 							</a>
 						{% endif %}
 					</td>

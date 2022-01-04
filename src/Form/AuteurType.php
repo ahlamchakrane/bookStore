@@ -33,8 +33,8 @@ class AuteurType extends AbstractType
                 'label_attr' => [
                     'class' => 'col-sm-2 col-form-label'
                 ],
-            ])
-            ->add('livres');
+            ]);
+        //->add('livres');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

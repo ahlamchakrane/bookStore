@@ -34,10 +34,8 @@
 				<a href="{{ path('auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning">
 					<i class="bi bi-pen-fill"></i>
 				</a>
-				<a class="btn btn-danger">
-					<i class="bi bi-trash">
-						{{ include('auteur/_delete_form.html.twig') }}
-					</i>
+				<a class="btn">
+					{{ include('auteur/_delete_form.html.twig') }}
 				</a>
 			</td>
 		</tbody>

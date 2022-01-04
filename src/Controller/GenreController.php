@@ -80,8 +80,11 @@ class GenreController extends AbstractController
     public function delete(Request $request, Genre $genre, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $genre->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($genre);
-            $entityManager->flush();
+
+            if ($genre->getLivres()->isEmpty()) {
+                $entityManager->remove($genre);
+                $entityManager->flush();
+            }
         }
 
         return $this->redirectToRoute('genre_index', [], Response::HTTP_SEE_OTHER);
@@ -91,7 +94,7 @@ class GenreController extends AbstractController
         $this->faker = Factory::create();
         $genres = $genreRepository->findAll();
         if ($genres == null) {
-            for ($i = 0; $i <= 20; $i++) {
+            for ($i = 1; $i <= 10; $i++) {
                 $genre = new genre();
                 $genre->setNom($this->faker->name);
                 $entityManager->persist($genre);

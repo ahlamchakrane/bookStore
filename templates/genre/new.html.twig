@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
 	<table>
 		{% if is_granted('ROLE_ADMIN') %}
-			<br>
 			<h2>Nouveau Genre</h2>
 			<center>
 				<a class="btn" style="width:50%; heigth:50%">
@@ -14,7 +19,5 @@
 			</center>
 			<a href="{{ path('genre_index') }}" class="btn btn-secondary" style="margin-left:30px">back to list</a>
 		</table>
-	{% else %}
-		<h1>404 page</h1>
 	{% endif %}
 {% endblock %}

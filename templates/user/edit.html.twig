@@ -3,6 +3,12 @@
 {% block title %}Edit Utilisateur
 {% endblock %}
 {% block body %}
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
 	<table>
 		{% if is_granted('ROLE_ADMIN') %}
 			<br>
@@ -12,10 +18,8 @@
 					<i class="bi bi-pen">
 						{{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
 					</i>
-					<button class="btn btn-danger">
-						<i class="bi bi-trash">
-							{{ include('user/_delete_form.html.twig') }}
-						</i>
+					<button class="btn">
+						{{ include('user/_delete_form.html.twig') }}
 					</button>
 				</a>
 			</center>

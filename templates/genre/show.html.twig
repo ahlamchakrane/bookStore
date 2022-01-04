@@ -30,10 +30,8 @@
 						<a href="{{ path('genre_edit', {'id': genre.id}) }}" class="btn btn-warning">
 							<i class="bi bi-pen-fill"></i>
 						</a>
-						<a class="btn btn-danger">
-							<i class="bi bi-trash">
-								{{ include('genre/_delete_form.html.twig') }}
-							</i>
+						<a class="btn">
+							{{ include('genre/_delete_form.html.twig') }}
 						</a>
 					{% endif %}
 				</td>

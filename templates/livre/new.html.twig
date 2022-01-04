@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
 	<table>
 		{% if is_granted('ROLE_ADMIN') %}
-			<br>
 			<h2>Nouveau Livre</h2>
 			<center>
 				<a class="btn" style="width:50%; heigth:50%">

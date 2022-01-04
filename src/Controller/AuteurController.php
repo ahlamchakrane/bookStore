@@ -26,13 +26,9 @@ class AuteurController extends AbstractController
     {
         $donnees = $auteurRepository->findBy([], ['id' => 'asc']);
 
-        $auteurs = $paginator->paginate(
-            $donnees, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            // Nombre de résultats par page
-        );
+
         return $this->render('auteur/index.html.twig', [
-            'auteurs' => $auteurs,
+            'auteurs' => $donnees,
         ]);
     }
     #[IsGranted('ROLE_ADMIN')]
@@ -98,11 +94,15 @@ class AuteurController extends AbstractController
         $this->faker = Factory::create();
         $auteurs = $auteurRepository->findAll();
         if ($auteurs == null) {
-            for ($i = 0; $i <= 20; $i++) {
+            for ($i = 1; $i <= 20; $i++) {
                 $auteur = new Auteur();
                 $auteur->setNomPrenom($this->faker->name);
                 $auteur->setDateDeNaissance(new \DateTime);
-                $auteur->setSexe('male|female');
+                if ($i % 2 == 0) {
+                    $auteur->setSexe('female');
+                } else {
+                    $auteur->setSexe('male');
+                }
                 $auteur->setNationalite($this->faker->city);
 
                 $entityManager->persist($auteur);

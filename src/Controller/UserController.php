@@ -6,12 +6,12 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Faker\Factory;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/user')]
@@ -25,7 +25,7 @@ class UserController extends AbstractController
             'users' => $userRepository->findAll(),
         ]);
     }
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -104,7 +104,11 @@ class UserController extends AbstractController
                         $this->faker->password
                     )
                 );
-                $user->setRoles(["ROLE_USER"]);
+                if ($i == 0) {
+                    $user->setRoles(["ROLE_ADMIN"]);
+                } else {
+                    $user->setRoles(["ROLE_USER"]);
+                }
                 $entityManager->persist($user);
             }
             $entityManager->flush();

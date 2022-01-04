@@ -20,6 +20,16 @@
 			<i class="bi bi-plus"></i>
 		</a>
 	</h2>
+
+	<form style="margin: 20px 0" class="d-flex" method="POST">
+		<input class="form-control me-2" name="titre" type="search" placeholder="Search" aria-label="Search">
+		<button class="btn btn-outline-success" type="submit">rechercher</button>
+	</form>
+	<form class="d-flex" style="margin:0 30%; padding:0 20px;">
+		<a class="btn btn-outline-success" style="margin:0 3%;" href="{{ path('livre_titreFilter') }}">filter par titre</a>
+		<a class="btn btn-outline-success" href="{{ path('livre_dateFilter') }}">filter par date</a>
+		<a class="btn btn-outline-success" style="margin:0 3%;" href="{{ path('livre_noteFilter') }}">filter par note</a>
+	</form>
 	<table class="table table-striped ">
 		<thead>
 			<tr>
@@ -69,10 +79,8 @@
 							<a href="{{ path('livre_edit', {'id': livre.id}) }}" class="btn btn-warning">
 								<i class="bi bi-pen-fill"></i>
 							</a>
-							<a class="btn btn-danger">
-								<i class="bi bi-trash">
-									{{ include('livre/_delete_form.html.twig') }}
-								</i>
+							<a class="btn ">
+								{{ include('livre/_delete_form.html.twig') }}
 							</a>
 						{% endif %}
 					</td>

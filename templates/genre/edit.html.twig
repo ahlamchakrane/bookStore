@@ -3,25 +3,26 @@
 {% block title %}Edit Genre
 {% endblock %}
 {% block body %}
+	<style>
+		body {
+			margin: 40px;
+		}
+	</style>
+	<br>
 	<table>
 		{% if is_granted('ROLE_ADMIN') %}
-			<br>
 			<h2>Edit Genre</h2>
 			<center>
 				<a class="btn  m-12" style="width:50%; heigth:50%">
 					<i class="bi bi-pen">
 						{{ include('genre/_form.html.twig', {'button_label': 'Modifier'}) }}
 					</i>
-					<button class="btn btn-danger">
-						<i class="bi bi-trash">
-							{{ include('genre/_delete_form.html.twig') }}
-						</i>
+					<button class="btn">
+						{{ include('genre/_delete_form.html.twig') }}
 					</button>
 				</a>
 			</center>
 			<a href="{{ path('genre_index') }}" class="btn btn-secondary" style="margin-left:30px">back to list</a>
 		</table>
-	{% else %}
-		<h1>404 page</h1>
 	{% endif %}
 {% endblock %}
