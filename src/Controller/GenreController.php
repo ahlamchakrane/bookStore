@@ -18,12 +18,23 @@ use Faker\Factory;
 class GenreController extends AbstractController
 {
     private $faker;
+    private $genres;
 
-    #[Route('/', name: 'genre_index', methods: ['GET'])]
-    public function index(GenreRepository $genreRepository): Response
+    #[Route('/', name: 'genre_index', methods: ['GET', 'POST'])]
+    public function index(GenreRepository $genreRepository, Request $request): Response
     {
+        if ($request->isMethod("POST")) {
+            if ($request->get('recherche')) {
+                $genre = $genreRepository->findBy(array('nom' => $request->get('recherche')));
+                if ($genre != null) {
+                    $this->genres  = $genre;
+                }
+            }
+        } else {
+            $this->genres = $genreRepository->findBy([], ['id' => 'asc']);
+        }
         return $this->render('genre/index.html.twig', [
-            'genres' => $genreRepository->findAll(),
+            'genres' => $this->genres,
         ]);
     }
     #[IsGranted('ROLE_ADMIN')]

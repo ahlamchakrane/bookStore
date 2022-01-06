@@ -18,11 +18,23 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     private $faker;
-    #[Route('/', name: 'user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    private $users;
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/', name: 'user_index', methods: ['GET', 'POST'])]
+    public function index(UserRepository $userRepository, Request $request): Response
     {
+        if ($request->isMethod("POST")) {
+            if ($request->get('recherche')) {
+                $user = $userRepository->findBy(array('username' => $request->get('recherche')));
+                if ($user != null) {
+                    $this->users = $user;
+                }
+            }
+        } else {
+            $this->users = $userRepository->findBy([], ['id' => 'asc']);
+        }
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $this->users,
         ]);
     }
     #[IsGranted('ROLE_ADMIN')]

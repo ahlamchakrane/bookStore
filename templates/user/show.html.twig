@@ -19,7 +19,9 @@
 				<th>Username</th>
 				<th>Roles</th>
 				<th>Email</th>
-				<th>Actions</th>
+				{% if is_granted('ROLE_ADMIN','ROLE_USER') %}
+					<th>Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>

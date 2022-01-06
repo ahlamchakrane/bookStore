@@ -17,7 +17,9 @@
 			<tr>
 				<th style="width: 300px">#</th>
 				<th>Nom</th>
-				<th>Actions</th>
+				{% if is_granted('ROLE_ADMIN','ROLE_USER') %}
+					<th>Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>

@@ -15,14 +15,32 @@
 		body {
 			margin: 40px;
 		}
+		a {
+			text-decoration: none;
+			color: #000;
+		}
+		a:hover {
+			color: #bbb;
+		}
 	</style>
 	<br>
-	<h1>Auteurs
-		<a href="{{ path('auteur_new') }}" class="btn btn-primary">
-			<i class="bi bi-plus"></i>
+	<h2>
+		<a href="{{ path('auteur_index') }}">
+			Auteurs
 		</a>
-	</h1>
+		{% if is_granted('ROLE_ADMIN','ROLE_USER') %}
 
+			<a href="{{ path('auteur_new') }}" class="btn btn-primary">
+				<i class="bi bi-plus"></i>
+			</a>
+		{% endif %}
+	</h1>
+	<center>
+		<form style="margin: 20px 0; width:50%" class="d-flex" method="POST">
+			<input class="form-control me-2" name="recherche" type="search" placeholder="rechercher par nom" aria-label="Search">
+			<button class="btn btn-outline-success" type="submit">rechercher</button>
+		</form>
+	</center>
 	<table class="table table-striped ">
 		<thead>
 			<tr>
@@ -70,5 +88,11 @@
 				</tr>
 			</td>
 		</tbody>
-	</tr>
-</tbody></tbody></td></tr>{% else %}<tr><td colspan="6">no records found</td></tr>{% endfor %}</tbody></table>{% if is_granted('ROLE_ADMIN') %}{% endif %}{% endblock %}
+
+
+	{% else %}
+		<tr>
+			<td colspan="6">no records found</td>
+		</tr>
+	{% endfor %}
+</tbody></table>{% if is_granted('ROLE_ADMIN') %}{% endif %}{% endblock %}

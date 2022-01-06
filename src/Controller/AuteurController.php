@@ -21,14 +21,23 @@ use Faker\Factory;
 class AuteurController extends AbstractController
 {
     private $faker;
-    #[Route('/', name: 'auteur_index', methods: ['GET'])]
+    private $donnees;
+    #[Route('/', name: 'auteur_index', methods: ['POST', 'GET'])]
     public function index(AuteurRepository $auteurRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $donnees = $auteurRepository->findBy([], ['id' => 'asc']);
-
+        if ($request->isMethod("POST")) {
+            if ($request->get('recherche')) {
+                $auteur = $auteurRepository->findBy(array('nom_prenom' => $request->get('recherche')));
+                if ($auteur != null) {
+                    $this->donnees  = $auteur;
+                }
+            }
+        } else {
+            $this->donnees = $auteurRepository->findBy([], ['id' => 'asc']);
+        }
 
         return $this->render('auteur/index.html.twig', [
-            'auteurs' => $donnees,
+            'auteurs' => $this->donnees,
         ]);
     }
     #[IsGranted('ROLE_ADMIN')]

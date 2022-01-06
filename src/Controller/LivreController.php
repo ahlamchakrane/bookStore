@@ -22,26 +22,33 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Faker\Factory;
 use Symfony\Component\Validator\Constraints\Length;
 
+use function PHPUnit\Framework\isEmpty;
+
 #[Route('/livre')]
 class LivreController extends AbstractController
 {
     private $faker;
     private $livres;
     #[Route('/', name: 'livre_index', methods: ['GET', 'POST'])]
-    public function index(LivreRepository $livreRepository, AuteurRepository $auteurRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(LivreRepository $livreRepository, GenreRepository $genreRepository, AuteurRepository $auteurRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         if ($request->isMethod("POST")) {
-            if ($request->get('titre'))
-                $this->livres = $livreRepository->findBy(array('titre' => $request->get('titre')));
-            else if ($request->get('auteur')) {
-                $this->livres = $auteurRepository->findBy(array('nom_prenom' => $request->get('auteur')));
-                return $this->renderForm('auteur/index.html.twig', [
-                    'auteurs' => $this->livres,
-                ]);
-            } else
-                $this->livres = $livreRepository->findAll();
+            if ($request->get('recherche')) {
+                $this->livres = $livreRepository->findBy(array('titre' => $request->get('recherche')));
+                if ($this->livres == null) {
+                    $auteur = $auteurRepository->findOneBy(array('nom_prenom' => $request->get('recherche')));
+                    if ($auteur != null) {
+                        $this->livres = $auteur->getLivres();
+                    } else {
+                        $genre = $genreRepository->findOneBy(array('nom' => $request->get('recherche')));
+                        if ($genre != null) {
+                            $this->livres = $genre->getLivres();
+                        }
+                    }
+                }
+            }
         } else {
-            $this->livres = $livreRepository->findAll();
+            $this->livres = $livreRepository->findBy([], ['id' => 'asc']);
         }
 
         return $this->renderForm('livre/index.html.twig', [

@@ -22,7 +22,9 @@
 				<th>Nombre_page</th>
 				<th>Date_de_parution</th>
 				<th>Note</th>
-				<th>Actions</th>
+				{% if is_granted('ROLE_ADMIN','ROLE_USER') %}
+					<th>Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -34,10 +36,13 @@
 				<td>{{ livre.dateDeParution ? livre.dateDeParution|date('Y-m-d') : '' }}</td>
 				<td>{{ livre.note }}</td>
 				<td>
-					<a href="{{ path('livre_edit', {'id': livre.id}) }}" class="btn btn-warning">edit</a>
-					<a class="btn">
-						{{ include('livre/_delete_form.html.twig') }}
-					</a>
+					{% if is_granted('ROLE_ADMIN') %}
+
+						<a href="{{ path('livre_edit', {'id': livre.id}) }}" class="btn btn-warning">edit</a>
+						<a class="btn">
+							{{ include('livre/_delete_form.html.twig') }}
+						</a>
+					{% endif %}
 				</td>
 			</tr>
 		</tbody>

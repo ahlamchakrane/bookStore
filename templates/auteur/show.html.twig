@@ -21,7 +21,9 @@
 				<th>Genre</th>
 				<th>Date_de_naissance</th>
 				<th>Nationalite</th>
-				<th>Actions</th>
+				{% if is_granted('ROLE_ADMIN','ROLE_USER') %}
+					<th>Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -31,12 +33,15 @@
 			<td>{{ auteur.dateDeNaissance ? auteur.dateDeNaissance|date('Y-m-d') : '' }}</td>
 			<td>{{ auteur.nationalite }}</td>
 			<td>
-				<a href="{{ path('auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning">
-					<i class="bi bi-pen-fill"></i>
-				</a>
-				<a class="btn">
-					{{ include('auteur/_delete_form.html.twig') }}
-				</a>
+				{% if is_granted('ROLE_ADMIN') %}
+
+					<a href="{{ path('auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning">
+						<i class="bi bi-pen-fill"></i>
+					</a>
+					<a class="btn">
+						{{ include('auteur/_delete_form.html.twig') }}
+					</a>
+				{% endif %}
 			</td>
 		</tbody>
 	</table>
